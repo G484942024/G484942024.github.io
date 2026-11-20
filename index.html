@@ -1,162 +1,451 @@
 <!DOCTYPE html>
-<!-- oss-template-2026:placeholder （この目印で，scripts/check.sh が「準備中」のページかどうかを見分けます） -->
-<!--
-  テンプレートの「準備中」のページです．
-  このページが https://ユーザー名.github.io/ に表示されたら，GitHub Pages の設定は成功です．
-  第7回の実習4で，このファイルを第6回で作った index.html に置きかえます．
--->
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>準備中</title>
-  <style>
-    /* ===== 色の設定 ===== */
-    :root {
-      --main-color: #2e7d32;  /* メインの色（見出し・番号） */
-      --bg-color: #f5f8f5;    /* ページの背景の色 */
-      --card-color: #ffffff;  /* カードの背景の色 */
-      --text-color: #222222;  /* 文字の色 */
-      --sub-color: #666666;   /* 補足の文字の色 */
-      --line-color: #dfe6df;  /* 区切り線の色 */
-    }
+    <!-- 文字コード設定 -->
+    <meta charset="UTF-8">
 
-    /* パソコンやスマートフォンがダークモードのときの色 */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --main-color: #81c784;
-        --bg-color: #121512;
-        --card-color: #1e231e;
-        --text-color: #e8ece8;
-        --sub-color: #a0a8a0;
-        --line-color: #2f362f;
-      }
-    }
+    <!-- スマートフォン対応 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    /* ページ全体：カードを画面のまんなかに置く */
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      box-sizing: border-box;
-      font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      line-height: 1.8;
-      color: var(--text-color);
-      background: var(--bg-color);
-    }
+    <title>Neo Portfolio</title>
 
-    /* まんなかのカード */
-    main {
-      width: 100%;
-      max-width: 600px;
-      padding: 32px 28px;
-      background: var(--card-color);
-      border-top: 6px solid var(--main-color);
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    }
+    <style>
+        /* ==================================================
+           全体設定
+        ================================================== */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
 
-    h1 {
-      margin: 0 0 4px;
-      font-size: clamp(1.3rem, 6vw, 1.6rem);  /* スマートフォンでは少し小さくする */
-      line-height: 1.4;
-      color: var(--main-color);
-    }
+        body{
+            font-family:"Yu Gothic","Hiragino Sans","Meiryo",sans-serif;
+            color:#ffffff;
+            overflow-x:hidden;
+            min-height:100vh;
 
-    h2 {
-      margin: 28px 0 8px;
-      padding-bottom: 4px;
-      font-size: 1.05rem;
-      border-bottom: 1px solid var(--line-color);
-    }
+            /* 青と紫を中心としたカラフルな背景 */
+            background:
+                radial-gradient(circle at 10% 20%, rgba(0,255,255,.45), transparent 25%),
+                radial-gradient(circle at 85% 15%, rgba(255,0,200,.35), transparent 25%),
+                radial-gradient(circle at 15% 85%, rgba(98,0,255,.45), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(0,255,170,.30), transparent 30%),
+                linear-gradient(
+                    135deg,
+                    #02030b 0%,
+                    #17062d 35%,
+                    #0b0222 65%,
+                    #000000 100%
+                );
 
-    /* 「設定は成功」のバッジ */
-    .badge {
-      display: inline-block;
-      margin: 8px 0 0;
-      padding: 2px 12px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      color: var(--card-color);
-      background: var(--main-color);
-      border-radius: 999px;
-    }
+            line-height:1.8;
+        }
 
-    /* 「次にやること」の番号つきリスト */
-    ol {
-      margin: 0;
-      padding-left: 1.4em;
-    }
-    li {
-      margin-bottom: 6px;
-    }
-    li::marker {
-      font-weight: bold;
-      color: var(--main-color);
-    }
+        /* ==================================================
+           混沌感を出す背景装飾
+        ================================================== */
+        body::before{
+            content:"";
+            position:fixed;
+            inset:0;
 
-    /* コマンドの見た目 */
-    code {
-      padding: 1px 6px;
-      font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 0.88em;
-      background: var(--bg-color);
-      border-radius: 4px;
-      white-space: nowrap;  /* コマンドの途中で折り返さない */
-    }
+            background:
+                repeating-linear-gradient(
+                    55deg,
+                    transparent 0,
+                    transparent 120px,
+                    rgba(255,255,255,0.03) 121px,
+                    rgba(255,255,255,0.03) 123px
+                );
 
-    /* 補足の小さな文字 */
-    .sub {
-      font-size: 0.9rem;
-      color: var(--sub-color);
-    }
+            pointer-events:none;
+        }
 
-    /* いちばん下の小さな文字 */
-    footer {
-      margin-top: 28px;
-      padding-top: 12px;
-      font-size: 0.8rem;
-      color: var(--sub-color);
-      border-top: 1px solid var(--line-color);
-    }
-    a {
-      color: var(--main-color);
-    }
-  </style>
+        /* ==================================================
+           コンテンツ全体
+        ================================================== */
+        .container{
+            width:min(1100px,92%);
+            margin:auto;
+            padding-bottom:80px;
+        }
+
+        /* ==================================================
+           ファーストビュー
+        ================================================== */
+        .hero{
+            min-height:100vh;
+
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+
+            position:relative;
+        }
+
+        /* ダイナミックな光の演出 */
+        .hero::before{
+            content:"";
+            position:absolute;
+
+            width:700px;
+            height:700px;
+
+            left:50%;
+            top:50%;
+
+            transform:translate(-50%,-50%);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,.25),
+                    rgba(0,255,255,.15) 18%,
+                    rgba(140,0,255,.15) 40%,
+                    rgba(255,0,180,.15) 58%,
+                    transparent 75%
+                );
+
+            filter:blur(30px);
+            z-index:-1;
+        }
+
+        /* キャッチコピー */
+        .catch{
+            color:#ffe46b;
+            font-size:0.95rem;
+            font-weight:bold;
+            letter-spacing:.3em;
+            margin-bottom:18px;
+        }
+
+        /* サイトタイトル */
+        .hero h1{
+            font-size:clamp(4.5rem,14vw,10rem);
+            line-height:.9;
+            letter-spacing:.15em;
+            font-weight:900;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00f5ff,
+                    #4b8cff,
+                    #8f5fff,
+                    #ff4fd0
+                );
+
+            -webkit-background-clip:text;
+            color:transparent;
+
+            text-shadow:
+                0 0 20px rgba(0,255,255,.5),
+                0 0 40px rgba(255,0,255,.2);
+        }
+
+        .hero p{
+            margin-top:25px;
+            max-width:700px;
+            font-size:1.2rem;
+            color:#dde8ff;
+        }
+
+        /* ==================================================
+           セクション共通
+        ================================================== */
+        section{
+            margin-top:60px;
+
+            padding:35px;
+
+            background:rgba(255,255,255,0.05);
+
+            border:1px solid rgba(255,255,255,0.12);
+
+            border-radius:18px;
+
+            backdrop-filter:blur(10px);
+
+            position:relative;
+            overflow:hidden;
+        }
+
+        /* 混沌感を出す斜め装飾 */
+        section::before{
+            content:"";
+            position:absolute;
+
+            width:250px;
+            height:250px;
+
+            right:-120px;
+            top:-120px;
+
+            transform:rotate(45deg);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,255,255,.15),
+                    rgba(255,0,180,.15)
+                );
+        }
+
+        section h2{
+            margin-bottom:20px;
+            color:#97ebff;
+            font-size:2rem;
+            letter-spacing:.08em;
+        }
+
+        /* ==================================================
+           リスト
+        ================================================== */
+        ul{
+            list-style:none;
+        }
+
+        li{
+            margin:12px 0;
+        }
+
+        /* ==================================================
+           カードレイアウト
+        ================================================== */
+        .grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:20px;
+        }
+
+        .card{
+            padding:22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,200,255,.18),
+                    rgba(90,0,255,.18),
+                    rgba(255,0,160,.18)
+                );
+
+            border:1px solid rgba(255,255,255,.1);
+
+            border-radius:14px;
+        }
+
+        .card h3{
+            margin-bottom:8px;
+        }
+
+        /* ==================================================
+           サイトイメージ欄
+        ================================================== */
+        .image-box{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+        }
+
+        .image-item{
+            padding:20px;
+
+            border-radius:14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,255,255,.15),
+                    rgba(120,0,255,.15)
+                );
+
+            border:1px solid rgba(255,255,255,.1);
+        }
+
+        /* ==================================================
+           ひとこと
+        ================================================== */
+        .message{
+            text-align:center;
+
+            font-size:clamp(1.3rem,3vw,2rem);
+
+            font-weight:900;
+
+            color:#fff1a8;
+
+            text-shadow:
+                0 0 10px rgba(255,255,255,.2),
+                0 0 20px rgba(255,240,0,.25);
+        }
+
+        /* ==================================================
+           フッター
+        ================================================== */
+        footer{
+            margin-top:60px;
+            text-align:center;
+            color:#b0bad7;
+        }
+
+        /* ==================================================
+           スマートフォン対応
+        ================================================== */
+        @media(max-width:768px){
+
+            .hero{
+                min-height:85vh;
+            }
+
+            .hero p{
+                font-size:1rem;
+            }
+
+            section{
+                padding:25px;
+            }
+
+            section h2{
+                font-size:1.6rem;
+            }
+
+            .image-box{
+                grid-template-columns:1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <main>
-    <h1>このサイトは準備中です</h1>
-    <p class="badge">GitHub Pages の設定 OK</p>
-    <p>このページが表示されていれば，あなたのリポジトリは正しく公開されています．
-      あとは，このページを自分のサイトに置きかえるだけです．</p>
 
-    <h2>次にやること</h2>
-    <ol>
-      <li>このリポジトリを，SSHのURLで <code>git clone</code> する</li>
-      <li><code>index.html</code> を，第6回で作ったサイトに置きかえる</li>
-      <li><code>bash scripts/check.sh</code> で，公開前のチェックをする</li>
-      <li><code>git add</code> → <code>git commit</code> → <code>git push origin main</code> する</li>
-      <li>数分待ってから，このページを再読み込みする</li>
-    </ol>
-    <p class="sub">再読み込みしても変わらないときは，強制再読み込み（Windows：Ctrl + F5，Mac：Command + Shift + R）を試しましょう．</p>
+    <div class="container">
 
-    <h2>公開する前に</h2>
-    <ul>
-      <li>本名のフルネーム・学籍番号・住所・電話番号・メールアドレスが入っていないか</li>
-      <li>自己紹介に書いていないことを，AIが付け足していないか</li>
-    </ul>
-    <p class="sub">このリポジトリは Public です．サイトだけでなく，ファイルの中身やコミットの履歴も，誰でも見ることができます．</p>
+        <!-- ==================================================
+             メインビジュアル
+        ================================================== -->
+        <header class="hero">
 
-    <footer>
-      拓殖大学工学部『オープンソースソフトウェア』2026年度<br>
-      <a href="https://github.com/tomohitoy/oss-practice-2026/blob/main-07/chap07/README.md">第7回の資料</a>
-      ・
-      <a href="https://github.com/tomohitoy/oss-template-2026">テンプレート（tomohitoy/oss-template-2026）</a>
-    </footer>
-  </main>
+            <div class="catch">
+                COLORFUL / CHAOTIC / DYNAMIC / IMPACT
+            </div>
+
+            <h1>NEO</h1>
+
+            <p>
+                休みの日は家族とお出かけをしています。
+            </p>
+
+        </header>
+
+        <!-- ==================================================
+             基本情報
+        ================================================== -->
+        <section>
+            <h2>基本情報</h2>
+
+            <ul>
+                <li><strong>名前：</strong>Neo</li>
+                <li><strong>学年：</strong>3</li>
+                <li><strong>所属：</strong>拓殖大学工学部情報工学科</li>
+            </ul>
+        </section>
+
+        <!-- ==================================================
+             趣味・好きなこと
+        ================================================== -->
+        <section>
+            <h2>趣味・好きなこと</h2>
+
+            <div class="grid">
+
+                <div class="card">
+                    <h3>🚴 サイクリング</h3>
+                </div>
+
+                <div class="card">
+                    <h3>🚗 ドライブ</h3>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================================================
+             プログラミング経験
+        ================================================== -->
+        <section>
+            <h2>プログラミング経験</h2>
+
+            <div class="grid">
+
+                <div class="card">
+                    <h3>Java</h3>
+                </div>
+
+                <div class="card">
+                    <h3>JavaScript</h3>
+                </div>
+
+                <div class="card">
+                    <h3>HTML / CSS / JS</h3>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================================================
+             この授業で学びたいこと
+        ================================================== -->
+        <section>
+            <h2>この授業で学びたいこと</h2>
+
+            <ul>
+                <li>OSSの使い方とその上での注意点</li>
+                <li>OSSの未来予想図</li>
+            </ul>
+        </section>
+
+        <!-- ==================================================
+             サイトのイメージ
+             自己紹介に記載された内容を明示
+        ================================================== -->
+        <section>
+            <h2>サイトのイメージ</h2>
+
+            <div class="image-box">
+
+                <div class="image-item">
+                    <h3>好きな色</h3>
+                    <p>青、紫</p>
+                </div>
+
+                <div class="image-item">
+                    <h3>雰囲気</h3>
+                    <p>カラフル、混沌、ダイナミック、インパクト</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================================================
+             ひとこと
+        ================================================== -->
+        <section>
+            <h2>ひとこと</h2>
+
+            <div class="message">
+                お金を貯めるいちばんの方法は、<br>
+                お金を使わないことです。
+            </div>
+        </section>
+
+        <!-- ==================================================
+             フッター
+        ================================================== -->
+        <footer>
+            NEO PORTFOLIO
+        </footer>
+
+    </div>
+
 </body>
 </html>
